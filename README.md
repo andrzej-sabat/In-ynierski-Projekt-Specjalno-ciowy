@@ -1,6 +1,6 @@
 # Grupa 4
 # Benchmark wydajności bazy Clickhouse oraz Neo4J
-## Aplikacja spełniajaca zadania dziennika elektronicznego przygotowana na zajęcia z programowania zespołowego.
+## Aplikacja benchmarkowa przygotowana na zajęcia z Inżynierskiego projektu specjalnosciowego
 
 ## Spis treści:
 1. Cel systemu,
