@@ -18,7 +18,7 @@
 *Aplikacja pozwala na komunikacje z bazą danych Clickhouse oraz Neo4J. Użytkownik może przełączać sie pomiedzy silnikami bazodanowymi i zasilać je zewnetrznymi danymi. Po zasileniu jednego z silników użytkownik może przetransferować dane do drugiego silnika. System pozawala na wybór tabeli której zawartość wraz ze struktórą przenoszona jest między tabelami a także wykonuje proste zapytania na danych w zależności od wybranego silnika. Wszystkie operacje wykonywane w systemie generują współczynniki czasowe pozwalające na weryfikację wydajności działania danego silnika bazodanowego.*
 
 #### 2. Potencjalni użytkownicy systemu:
-*System kierowany jest do osób chcących porównać wydajność silników bazodanowych. W systemie istnieje tylko jedna grupa użytkownikó która ma dostęp do wszystkich części składowych aplikacji.*
+*System kierowany jest do osób chcących sprawdzić wydajność silników bazodanowych przy dużej zawartości danych.*
 
 #### 3. Informacje gromadzone przez system:
 *System gromadzi informacje dotyczące czasu wykonania operacji benchmarkowych dla danego silnika*
