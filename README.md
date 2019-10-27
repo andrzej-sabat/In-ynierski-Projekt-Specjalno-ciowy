@@ -45,7 +45,7 @@ Aplikacją jest objęta licencją MIT.
 #### 8. Schematy UML systemu:
 - diagram przypadków użycia
 
-![Błąd](diagram_przypadków_uzyciaa.png "Opcjonalny tytul")
+![Błąd](diagram_przypadkow_uzycia.png "Opcjonalny tytul")
 
 
 - diagram klas
@@ -61,7 +61,7 @@ Aplikacją jest objęta licencją MIT.
  - diagram sekwencji
 
 
-![Błąd](Diagram_sekwencji.png "Opcjonalny tytul")
+![Błąd](diagram_sekwencji.png "Opcjonalny tytul")
 
  - diagram ERD bazy danych
  
