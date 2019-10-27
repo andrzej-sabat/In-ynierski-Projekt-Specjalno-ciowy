@@ -48,11 +48,7 @@ Aplikacją jest objęta licencją MIT.
 ![Błąd](diagram_przypadkow_uzycia.png "Opcjonalny tytul")
 
 
-- diagram klas
- 
- 
- ![Błąd](diagram_klas.png "Opcjonalny tytul")
- 
+
  
  - diagram aktywności
  
@@ -63,6 +59,3 @@ Aplikacją jest objęta licencją MIT.
 
 ![Błąd](diagram_sekwencji.png "Opcjonalny tytul")
 
- - diagram ERD bazy danych
- 
- ![Błąd](ERD_baza_danych.PNG "Opcjonalny tytul")
