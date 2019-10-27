@@ -8,7 +8,7 @@
 3. Informacje gromadzone przez system,
 4. Informacje generowane przez system,
 5. Uprawnienia użytkowników,
-6. Autorzy aplikacji,
+6. Autorzy aplikacji oraz podział obowiązków,
 7. Licencja,
 8. Schematy UML systemu.
 
