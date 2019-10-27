@@ -29,11 +29,11 @@
 #### 5. Uprawnienia użytkowników:
 *W systemie istnieje jedna grupa użytkowników, która ma dostęp do wszystkich funkcjonalności systemu.*
 
-#### 6.Autorzy aplikacji:
-- Andrzej Sabat
-- Adam Marzec
-- Damian Wawrzkowicz
-- Krzysztof Pięta
+#### 6.Autorzy aplikacji oraz podział obowiązków:
+- Andrzej Sabat - kapitan, pisanie kodu aplikacji
+- Adam Marzec - pisanie dokumentacji, pomoc przy bazie danych
+- Damian Wawrzkowicz - pisanie kodu aplikacji
+- Krzysztof Pięta - zajmowanie sie bazą danych
 
 #### 7.Licencja
 
