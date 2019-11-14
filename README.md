@@ -10,7 +10,8 @@
 5. Uprawnienia użytkowników,
 6. Autorzy aplikacji oraz podział obowiązków,
 7. Licencja,
-8. Schematy UML systemu.
+8. Terminarz
+9. Schematy UML systemu.
 
 
 
@@ -39,10 +40,16 @@
 
 Aplikacją jest objęta licencją MIT.
 
+#### 8.Terminarz
+- opracowanie założeń i wymagań do: 28.10.2019
+- opracowanie wstępnej dokumentacji do: 04.11.2019
+- implementacja do: 25.11.2019
+- testy do: 02.12.2019
+- przygotowanie dokumentacji do: 09.12.2019
+- prezentacja projektu, rozliczenie, zaliczenia: 16.12.2019
 
 
-
-#### 8. Schematy UML systemu:
+#### 9. Schematy UML systemu:
 - diagram przypadków użycia
 
 ![Błąd](diagram_przypadkow_uzycia.png "Opcjonalny tytul")
