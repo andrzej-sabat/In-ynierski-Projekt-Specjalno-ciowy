@@ -8,6 +8,10 @@ import java.util.Collection;
 
 public interface MovieRepository extends Neo4jRepository<Movie, Long> {
 
-    @Query("MATCH (n:Movie) RETURN n LIMIT 100")
+    @Query("MATCH (n:Movie) RETURN n limit 100")
     Collection<Movie> getAllMovies();
+
+    Movie findById(Long id);
+
+    Movie deleteById(Long id);
 }

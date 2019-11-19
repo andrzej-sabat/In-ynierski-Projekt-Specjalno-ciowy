@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:dt="http://java.sun.com/xml/ns/persistence/orm">
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+          xmlns:dt="http://www.thymeleaf.org/dandelion/datatables" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="css/styles.css" rel="stylesheet"/>
+    <title>Dodawanie filmu</title>
+</head>
+<body>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<div class="container">
+    <div class="row margin-top-20pr">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form th:action="@{/neo4j_saveMovie}" th:object="${movie}" method="post" >
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <input type="hidden" name="id" th:field="*{id}"/>
+                                <label>Tytuł filmu</label>
+                                <input type="text" id="id_kod" name="title" placeholder="Tytuł filmu"
+                                       class="form-control" th:field="*{title}"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <label>Gatunki filmu</label>
+                                <input type="text" id="nazwa_indeksu" name="genres" placeholder="Gatunki"
+                                       class="form-control" th:field="*{genres}"/> <br/>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-lg btn-primary btn-block" name="dodaj_indeks" value="Dodaj" type="Submit">
+                                            Zapisz film
+                                        </button>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+
+                <div class="col-md-2"></div>
+
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

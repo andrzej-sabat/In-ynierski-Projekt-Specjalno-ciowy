@@ -10,7 +10,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <title>Hello, world!</title>
+        <title>Lista filmów</title>
     </head>
 <body>
 <h1>Movies</h1>
@@ -28,25 +28,24 @@
                    dt:table="true">
                 <thead>
                 <tr>
-                    <th>GraphId</th>
+
                     <th>MovieId</th>
                     <th>Title</th>
                     <th>Genres</th>
-                   <!-- <th>Akcja</th>-->
+                    <th>Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="movie : ${moviesList}">
-                    <td th:text="${movie?.graphId}"></td>
                     <td th:text="${movie?.id}"></td>
                     <td th:text="${movie?.title}"></td>
                     <td th:text="${movie?.genres}"></td>
-                  <!--  <td>
-                        <a th:href="@{/edit_krmaszyny/?krm_id={krm_id}(krm_id=${krMaszyny.krm_id})}"
+                    <td>
+                        <a th:href="@{/neo4j_editMovie/?id={id}(id=${movie.id})}"
                            class="btn btn-info">Edytuj</a>
-                        <a th:href="@{/delete_krmaszyny/?krm_id={krm_id}(krm_id=${krMaszyny.krm_id})}"
+                        <a th:href="@{/neo4j_deleteMovie/?id={id}(id=${movie.id})}"
                            class="btn btn-danger">Usuń</a>
-                    </td>-->
+                    </td>
                 </tr>
                 </tbody>
             </table>

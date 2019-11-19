@@ -16,4 +16,23 @@ public class MovieService {
     public Collection<Movie> getAll() {
         return movieRepository.getAllMovies();
     }
+
+    public void addMovie(Movie Movie) {
+        movieRepository.save(Movie);
+    }
+
+
+    public Movie getMovie(Long id) {
+        return movieRepository.findById(id);
+    }
+
+
+    public Movie updateMovie(Long id,Movie Movie) {
+        return movieRepository.save(Movie);
+    }
+
+
+    public void deleteMovie(Long id) {
+        movieRepository.deleteById(id);
+    }
 }

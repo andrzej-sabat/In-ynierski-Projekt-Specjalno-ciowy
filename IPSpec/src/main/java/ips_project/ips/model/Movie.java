@@ -7,8 +7,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class Movie {
 
     @GraphId
-    private Long graphId;
-    private String id;
+    private Long id;
     private String title;
     private String genres;
 
@@ -17,11 +16,8 @@ public class Movie {
 
     }
 
-    public Long getGraphId() {
-        return graphId;
-    }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
