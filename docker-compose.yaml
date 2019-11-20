@@ -30,8 +30,8 @@ services:
 
  
   db1:
-    container_name: neo4j-ips
-    image: bitnami/neo4j:latest
+    container_name: neo4j-ips2019
+    image: neo4j:latest
     ports:
       - '7474:7474'
       - '7473:7473'
