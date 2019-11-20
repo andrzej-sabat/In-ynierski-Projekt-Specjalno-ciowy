@@ -1,0 +1,40 @@
+version: '3'
+services:
+  hk-nginx:
+   container_name: hk-nginx
+   image: nginx:1.13
+   restart: always
+   ports:
+   - 80:80
+   - 443:443
+   volumes:
+   - ./nginx/conf.d:/etc/nginx/conf.d
+   depends_on:
+   - app
+
+
+  app:
+    restart: always
+    build: ./IPSpec
+    working_dir: /IPSpec
+    volumes:
+      - ./IPSpec:/IPSpec
+      - ~/.m2:/root/.m2
+    expose:
+      - "8080"
+    command: mvn clean spring-boot:run
+    depends_on:
+      - db1
+  
+
+ 
+  db1:
+    container_name: neo4j-ips
+    image: bitnami/neo4j:latest
+    ports:
+      - '7474:7474'
+      - '7473:7473'
+      - '7687:7687'
+    environment:
+      NEO4J_AUTH: neo4j/ips2019
+
