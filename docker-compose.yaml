@@ -1,7 +1,7 @@
 version: '3'
 services:
   hk-nginx:
-   container_name: hk-nginx
+   container_name: hk-nginx2
    image: nginx:1.13
    restart: always
    ports:
