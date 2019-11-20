@@ -25,6 +25,7 @@ services:
     command: mvn clean spring-boot:run
     depends_on:
       - db1
+      - db2
   
 
  
@@ -36,5 +37,13 @@ services:
       - '7473:7473'
       - '7687:7687'
     environment:
-      NEO4J_AUTH: neo4j/ips2019
+      NEO4J_AUTH: neo4j/admin
+      
+  db2:
+    container_name: clickhouse-ips
+    image: yandex/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"   
+   
 
