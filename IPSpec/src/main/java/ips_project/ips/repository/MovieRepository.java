@@ -14,4 +14,6 @@ public interface MovieRepository extends Neo4jRepository<Movie, Long> {
     Movie findById(Long id);
 
     Movie deleteById(Long id);
+
+
 }

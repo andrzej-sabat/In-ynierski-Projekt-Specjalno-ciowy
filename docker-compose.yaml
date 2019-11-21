@@ -9,8 +9,10 @@ services:
    - 443:443
    volumes:
    - ./nginx/conf.d:/etc/nginx/conf.d
-   depends_on:
-   - app
+   networks:
+   - frontend
+   
+   
 
 
   app:
@@ -26,6 +28,11 @@ services:
     depends_on:
       - db1
       - db2
+    networks:
+      - backend
+      - frontend
+    
+      
   
 
  
@@ -38,12 +45,24 @@ services:
       - '7687:7687'
     environment:
       NEO4J_AUTH: neo4j/admin
+    networks:
+      - backend
+    
       
   db2:
     container_name: clickhouse-ips
     image: yandex/clickhouse-server
     ports:
       - "8123:8123"
-      - "9000:9000"   
+      - "9000:9000"  
+    networks:
+      - backend
+    
+networks:
+    backend:
+    frontend:
+        
+      
+
    
 
