@@ -48,6 +48,7 @@ services:
     networks:
       - backend
     
+    
       
   db2:
     container_name: clickhouse-ips

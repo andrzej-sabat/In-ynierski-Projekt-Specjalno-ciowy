@@ -10,11 +10,11 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <title>Lista filmów</title>
+        <title>Lista ocen</title>
     </head>
 <body>
 <a href="/neo4j_main" class="btn btn-info w-100 p-3" role="button">Home</a>
-<h1>Movies</h1>
+<h1>Ratings</h1>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -29,26 +29,25 @@
                    dt:table="true">
                 <thead>
                 <tr>
-
-                    <th>GraphId</th>
+                    <th>UserId</th>
                     <th>MovieId</th>
-                    <th>Title</th>
-                    <th>Genres</th>
-                    <th>Akcja</th>
+                    <th>Rate</th>
+                    <th>Timestamp</th>
+                 <!--   <th>Akcja</th>-->
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="movie : ${moviesList}">
-                    <td th:text="${movie?.id}"></td>
-                    <td th:text="${movie?.movieId}"></td>
-                    <td th:text="${movie?.title}"></td>
-                    <td th:text="${movie?.genres}"></td>
-                    <td>
-                        <a th:href="@{/neo4j_editMovie/?title={title}(title=${movie.title})}"
+                <tr th:each="rating : ${ratingsList}">
+                    <td th:text="${rating?.userId}"></td>
+                    <td th:text="${rating?.movieId}"></td>
+                    <td th:text="${rating?.rate}"></td>
+                    <td th:text="${rating?.timestamp}"></td>
+                  <!--  <td>
+                        <a th:href="@{/neo4j_editMovie/?id={id}(id=${movie.id})}"
                            class="btn btn-info">Edytuj</a>
-                        <a th:href="@{/neo4j_deleteMovie/?title={title}(title=${movie.title})}"
+                        <a th:href="@{/neo4j_deleteMovie/?id={id}(id=${movie.id})}"
                            class="btn btn-danger">Usuń</a>
-                    </td>
+                    </td>-->
                 </tr>
                 </tbody>
             </table>
