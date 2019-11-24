@@ -1,6 +1,5 @@
 package ips_project.ips.resource;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +19,13 @@ public class HomeResource {
     public ModelAndView neo4j_main(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/neo4j_main");
+        return modelAndView;
+    }
+
+    @RequestMapping(value={"/ck_main"}, method = RequestMethod.GET)
+    public ModelAndView ck_main(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/ck_main");
         return modelAndView;
     }
 }

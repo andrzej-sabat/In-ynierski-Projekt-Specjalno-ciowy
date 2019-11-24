@@ -52,7 +52,7 @@ services:
       
   db2:
     container_name: clickhouse-ips
-    image: yandex/clickhouse-server
+    image: yandex/clickhouse-server:latest
     ports:
       - "8123:8123"
       - "9000:9000"  
