@@ -10,6 +10,7 @@ import ru.yandex.clickhouse.ClickHouseDataSource;
 import ru.yandex.clickhouse.ClickHouseStatement;
 import ru.yandex.clickhouse.domain.ClickHouseFormat;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ import java.util.List;
 public class CKResource {
 
     private long time;
-    ips_project.ips.service.ckMovieService ckMovieService;
+
 
 
 //Ładowanie danych do ck, wyswietlanie wyniku czasowego ladowania danych
@@ -172,11 +173,6 @@ public class CKResource {
 
 
 
-
-
-
-
-
 //Buttony od filmu
     @RequestMapping(value = "/ck_addMovie",method = RequestMethod.GET)
     public ModelAndView addMovie(){
@@ -187,13 +183,34 @@ public class CKResource {
     @RequestMapping(value = "/ck_movieList",method = RequestMethod.GET)
     public ModelAndView movieList(Model model)  {
         ModelAndView modelAndView = new ModelAndView();
-        //List<ckMovie> moviesList = ckMovieService.getAllMovies();
-        //model.addAttribute("moviesList", moviesList);
+        try {
+            ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                    "jdbc:clickhouse://clickhouse-ips:8123");
+            ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = String.format("SELECT movieId, title, genre FROM test.movies");
+            ResultSet rs = stmt.executeQuery(sql);
+
+            List movies = new ArrayList<>();
+            while (rs.next()) {
+                int movieId = rs.getInt("movieId");
+                String title = rs.getString("title");
+                String genre = rs.getString("genre");
 
 
+                movies.add(new ckMovie(movieId, title, genre));
+            }
+            model.addAttribute("moviesList", movies);
+            modelAndView.setViewName("/ck_movieList");
+            return modelAndView;
 
-        modelAndView.setViewName("/ck_movieList");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return modelAndView;
+
     }
     @RequestMapping(value = "/ck_queries",method = RequestMethod.GET)
     public ModelAndView queries(){
@@ -225,7 +242,7 @@ public class CKResource {
 
         PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO test.movies (movieId, title, genre)" +
-                        "VALUES (?,?,?,?)"
+                        "VALUES (?,?,?)"
         );
         statement.setObject(1,id);
         statement.setObject(2,title);
@@ -237,5 +254,101 @@ public class CKResource {
         return modelAndView;
     }
 
+
+    @RequestMapping(value = "/ck_deleteMovie", method = RequestMethod.GET)
+    public ModelAndView neo4j_deleteMovie(HttpServletRequest request) throws SQLException {
+        int id = Integer.valueOf(request.getParameter("movieId"));
+        ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                "jdbc:clickhouse://clickhouse-ips:8123");
+        ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+
+
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM test.movies WHERE movieId = ?");
+        statement.setObject(1,id);
+        statement.addBatch();
+        statement.executeBatch();
+        connection.close();
+
+
+        ModelAndView model = new ModelAndView();
+
+        model.setViewName("/ck_moviesList");
+        return model;
+    }
+
+    @RequestMapping(value = "/ck_editMovie", method = RequestMethod.GET)
+    public ModelAndView neo4j_editMovie(HttpServletRequest request) {
+        //String title = request.getParameter("title");
+        //Movie movie = movieService.getMovieByTitle(title);
+        ModelAndView model = new ModelAndView("/neo4j_addMovie");
+        //model.addObject("movie",movie);
+
+        return model;
+    }
+
+
+// zapytania
+
+
+    @RequestMapping(value = "/ck_query1",method = RequestMethod.GET)
+    public ModelAndView query1() throws SQLException {
+        ModelAndView modelAndView = new ModelAndView();
+        ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                "jdbc:clickhouse://clickhouse-ips:8123");
+        ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+        ClickHouseStatement stm1 = connection.createStatement();
+        String sql = "SELECT movieId FROM test.ratings WHERE rating > 4";
+        long startTime = System.nanoTime();
+        connection.createStatement().execute(sql);
+        long endTime = System.nanoTime();
+
+        time = (endTime - startTime)/1000000;
+        connection.close();
+        modelAndView.addObject("loadTime", time);
+        modelAndView.addObject("query",sql);
+        modelAndView.setViewName("/ck_queryResult");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/ck_query2",method = RequestMethod.GET)
+    public ModelAndView query2() throws SQLException {
+        ModelAndView modelAndView = new ModelAndView();
+        ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                "jdbc:clickhouse://clickhouse-ips:8123");
+        ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+        ClickHouseStatement stm1 = connection.createStatement();
+        String sql = "SELECT movieId, count(*) FROM test.ratings WHERE rating >=5 GROUP BY movieId ORDER BY count(*)";
+        long startTime = System.nanoTime();
+        connection.createStatement().execute(sql);
+        long endTime = System.nanoTime();
+
+        time = (endTime - startTime)/1000000;
+        connection.close();
+        modelAndView.addObject("loadTime", time);
+        modelAndView.addObject("query",sql);
+        modelAndView.setViewName("/ck_queryResult");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/ck_query3",method = RequestMethod.GET)
+    public ModelAndView query3() throws SQLException {
+        ModelAndView modelAndView = new ModelAndView();
+        ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                "jdbc:clickhouse://clickhouse-ips:8123");
+        ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+        ClickHouseStatement stm1 = connection.createStatement();
+        String sql = "SELECT movieId, sum(rating) FROM test.ratings FROUP BY movieId ORDER BY sum(rating)";
+        long startTime = System.nanoTime();
+        connection.createStatement().execute(sql);
+        long endTime = System.nanoTime();
+
+        time = (endTime - startTime)/1000000;
+        connection.close();
+        modelAndView.addObject("loadTime", time);
+        modelAndView.addObject("query",sql);
+        modelAndView.setViewName("/ck_queryResult");
+        return modelAndView;
+    }
 
 }
