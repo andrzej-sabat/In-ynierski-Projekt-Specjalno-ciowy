@@ -8,18 +8,17 @@ public class ckRating {
     private String timestamp;
 
     public ckRating(int userId, int movieId, float rating, String timestamp) {
+        super();
         this.userId = userId;
         this.movieId = movieId;
         this.rating = rating;
         this.timestamp = timestamp;
     }
 
-    public ckRating() {
-
-    }
 
 
-    // public ckRating(){}
+
+     public ckRating(){}
 
 
     public int getUserId() {

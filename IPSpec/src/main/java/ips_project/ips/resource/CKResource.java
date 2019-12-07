@@ -14,8 +14,11 @@ import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @RestController
@@ -40,7 +43,7 @@ public class CKResource {
         connection.createStatement().execute("DROP TABLE IF EXISTS test.movies");
         connection.createStatement().execute(
                 "CREATE TABLE IF NOT EXISTS test.movies " +
-                        "(movieId Int32, title String, tag String, genre String)" +
+                        "(movieId Int32, title String, genre String)" +
                         "ENGINE = Join(ANY, LEFT, movieId)"
         );
         connection.createStatement().execute("DROP TABLE IF EXISTS test.ratings");
@@ -79,13 +82,6 @@ public class CKResource {
     public ModelAndView addRating() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/ck_addRating");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/ck_ratingList",method = RequestMethod.GET)
-    public ModelAndView ratingList() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/ck_ratingList");
         return modelAndView;
     }
 
@@ -134,6 +130,38 @@ public class CKResource {
 
 
 
+
+    @RequestMapping(value = "/ck_ratingList",method = RequestMethod.GET)
+    public ModelAndView ratingList(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                    "jdbc:clickhouse://clickhouse-ips:8123");
+            ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = String.format("SELECT userId, movieId, rating, timestamp FROM test.ratings");
+            ResultSet rs = stmt.executeQuery(sql);
+
+            List ratings = new ArrayList<>();
+            while (rs.next()) {
+                int userId = rs.getInt("userId");
+                int movieId = rs.getInt("movieId");
+                float rating = rs.getFloat("rating");
+                String timestamp = rs.getString("timestamp");
+
+                ratings.add(new ckRating(userId, movieId, rating, timestamp));
+            }
+            model.addAttribute("ratingList", ratings);
+            modelAndView.setViewName("/ck_ratingList");
+            return modelAndView;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modelAndView;
+    }
 
 
 
@@ -193,16 +221,15 @@ public class CKResource {
         id = rs.getInt(1) + 1;
         System.out.println(id);
         String title = movie.getTitle();
-        String genres = movie.getTag();
+        String genres = movie.getGenre();
 
         PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO test.movies (movieId, title, tag, genre)" +
+                "INSERT INTO test.movies (movieId, title, genre)" +
                         "VALUES (?,?,?,?)"
         );
         statement.setObject(1,id);
         statement.setObject(2,title);
-        statement.setObject(3,null);
-        statement.setObject(4,null);
+        statement.setObject(3,genres);
         statement.addBatch();
         statement.executeBatch();
         connection.close();
