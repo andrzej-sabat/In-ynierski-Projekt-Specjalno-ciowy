@@ -1,6 +1,7 @@
 package ips_project.ips.resource;
 
 import ips_project.ips.model.ckMovie;
+import ips_project.ips.model.ckRating;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,11 +14,15 @@ import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @RestController
 public class CKResource {
+
     private long time;
+    ips_project.ips.service.ckMovieService ckMovieService;
 
 
 //Ładowanie danych do ck, wyswietlanie wyniku czasowego ladowania danych
@@ -43,7 +48,7 @@ public class CKResource {
                 "CREATE TABLE IF NOT EXISTS test.ratings" +
                         "(userId Int32," +
                         " movieId Int32, " +
-                        "rating String, " +
+                        "rating Float32, " +
                         "timestamp String) " +
                         "ENGINE = Join(ANY, LEFT, userId)");
 
@@ -69,7 +74,82 @@ public class CKResource {
         modelAndView.setViewName("/ck_loadDataResult");
         return modelAndView;
     }
-//Mapowanie buttonów menu
+//Buttony od oceny
+    @RequestMapping(value = "/ck_addRating",method = RequestMethod.GET)
+    public ModelAndView addRating() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/ck_addRating");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/ck_ratingList",method = RequestMethod.GET)
+    public ModelAndView ratingList() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/ck_ratingList");
+        return modelAndView;
+    }
+
+
+    @GetMapping("/ck_saveRating")
+    public String showPage2(Model model){
+        model.addAttribute("ck_rating", new ckRating());
+        return "ck_saveRating";
+    }
+
+    @PostMapping(value = "/ck_saveRating")
+    public ModelAndView saveRating(@ModelAttribute("ck_rating") ckRating rating) throws SQLException {
+        ModelAndView modelAndView = new ModelAndView();
+        int id;
+        ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                "jdbc:clickhouse://clickhouse-ips:8123");
+        ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+        //ResultSet rs = connection.createStatement().executeQuery("SELECT max(movieId) FROM test.movies");
+        //System.out.println(rs);
+        //rs.next();
+        //id = rs.getInt(1) + 1;
+        //System.out.println(id);
+
+        String date = new SimpleDateFormat("ddmmyyyy").format(new Date());
+
+        int uId = rating.getUserId();
+        int mId = rating.getMovieId();
+        float rati = rating.getRating();
+        //String timestamp = rating.getTimestamp();
+
+
+        PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO test.ratings (userId, movieId, rating, timestamp)" +
+                        "VALUES (?,?,?,?)"
+        );
+        statement.setObject(1,uId);
+        statement.setObject(2,mId);
+        statement.setObject(3,rati);
+        statement.setObject(4,date);
+        statement.addBatch();
+        statement.executeBatch();
+        connection.close();
+        modelAndView.setViewName("/ck_ratingList");
+        return modelAndView;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Buttony od filmu
     @RequestMapping(value = "/ck_addMovie",method = RequestMethod.GET)
     public ModelAndView addMovie(){
         ModelAndView modelAndView = new ModelAndView();
@@ -77,8 +157,13 @@ public class CKResource {
         return modelAndView;
     }
     @RequestMapping(value = "/ck_movieList",method = RequestMethod.GET)
-    public ModelAndView movieList(){
+    public ModelAndView movieList(Model model)  {
         ModelAndView modelAndView = new ModelAndView();
+        //List<ckMovie> moviesList = ckMovieService.getAllMovies();
+        //model.addAttribute("moviesList", moviesList);
+
+
+
         modelAndView.setViewName("/ck_movieList");
         return modelAndView;
     }
@@ -102,9 +187,8 @@ public class CKResource {
         ClickHouseDataSource dataSource = new ClickHouseDataSource(
                 "jdbc:clickhouse://clickhouse-ips:8123");
         ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
-        ClickHouseStatement stm1 = connection.createStatement();
         ResultSet rs = connection.createStatement().executeQuery("SELECT max(movieId) FROM test.movies");
-        System.out.println(rs);
+        //System.out.println(rs);
         rs.next();
         id = rs.getInt(1) + 1;
         System.out.println(id);

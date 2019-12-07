@@ -6,6 +6,23 @@ public class ckMovie {
     private String tag;
     private String genre;
 
+    public ckMovie(int movieId, String title, String tag, String genre) {
+        this.movieId = movieId;
+        this.title = title;
+        this.tag = tag;
+        this.genre = genre;
+    }
+
+    public ckMovie(int movieId, String title, String tag) {
+        this.movieId = movieId;
+        this.title = title;
+        this.tag = tag;
+    }
+
+    public ckMovie() {
+
+    }
+
     public int getMovieId() {
         return movieId;
     }

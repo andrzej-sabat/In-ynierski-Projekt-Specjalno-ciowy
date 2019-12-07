@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f82b8ef7-a0c4-4a1a-831d-2bb3bf22e35a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IPSpec/src/main/java/ips_project/ips/service/ckMovieService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IPSpec/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/IPSpec/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IPSpec/src/main/java/ips_project/ips/model/ckMovie.java" beforeDir="false" afterPath="$PROJECT_DIR$/IPSpec/src/main/java/ips_project/ips/model/ckMovie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IPSpec/src/main/java/ips_project/ips/resource/CKResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/IPSpec/src/main/java/ips_project/ips/resource/CKResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IPSpec/src/main/resources/templates/ck_main.html" beforeDir="false" afterPath="$PROJECT_DIR$/IPSpec/src/main/resources/templates/ck_main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IPSpec/src/main/resources/templates/ck_movieList.html" beforeDir="false" afterPath="$PROJECT_DIR$/IPSpec/src/main/resources/templates/ck_movieList.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,18 +16,83 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1912" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+              <item name="IPSpec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+              <item name="IPSpec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+              <item name="IPSpec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+              <item name="IPSpec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+              <item name="IPSpec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ips_project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Inzynierski-Projekt-Specjalnosciowy" type="462c0819:PsiDirectoryNode" />
+              <item name="IPSpec" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ips_project" type="462c0819:PsiDirectoryNode" />
+              <item name="ips" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/IPSpec" />
@@ -53,13 +123,48 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="952c330c-6903-4ffa-b951-8b8ede6bb116" name="Default Changelist" comment="" />
+      <changelist id="f82b8ef7-a0c4-4a1a-831d-2bb3bf22e35a" name="Default Changelist" comment="" />
       <created>1574177076092</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574177076092</updated>
     </task>
     <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="DB Browser" />
+      <window_info id="UI Designer" />
+      <window_info id="Project Explorer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Capture Tool" />
+      <window_info id="Job Explorer" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="DB Execution Console" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Console" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -69,7 +174,28 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
