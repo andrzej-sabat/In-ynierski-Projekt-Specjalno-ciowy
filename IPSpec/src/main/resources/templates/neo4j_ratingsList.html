@@ -14,8 +14,7 @@
     </head>
 <body>
 <a href="/neo4j_main" class="btn btn-info w-100 p-3" role="button">Home</a>
-<h1>Ratings</h1>
-
+<br/>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -25,7 +24,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <table id="moviesTable" class="table table-striped table-bordered"
+            <h1 style="text-align: center;">Lista ocen</h1>
+            <hr/>
+            <br/>
+            <table id="ratingsTable" class="table table-striped table-bordered"
                    dt:table="true">
                 <thead>
                 <tr>
@@ -33,7 +35,7 @@
                     <th>MovieId</th>
                     <th>Rate</th>
                     <th>Timestamp</th>
-                 <!--   <th>Akcja</th>-->
+                    <th>Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,12 +44,12 @@
                     <td th:text="${rating?.movieId}"></td>
                     <td th:text="${rating?.rate}"></td>
                     <td th:text="${rating?.timestamp}"></td>
-                  <!--  <td>
-                        <a th:href="@{/neo4j_editMovie/?id={id}(id=${movie.id})}"
+                    <td>
+                        <a th:href="@{/neo4j_editRating/?id={id}(id=${rating.id})}"
                            class="btn btn-info">Edytuj</a>
-                        <a th:href="@{/neo4j_deleteMovie/?id={id}(id=${movie.id})}"
+                        <a th:href="@{/neo4j_deleteRating/?id={id}(id=${rating.id})}"
                            class="btn btn-danger">Usuń</a>
-                    </td>-->
+                    </td>
                 </tr>
                 </tbody>
             </table>

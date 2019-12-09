@@ -21,12 +21,15 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <div class="container">
-    <div class="row margin-top-20pr">
+    <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
 
             <div class="col-md-2"></div>
             <div class="col-md-8">
+                <h1 style="text-align: center">Dodaj ocene</h1>
+                <hr/>
+                <br/>
                 <form th:action="@{/ck_saveRating}" th:object="${ck_rating}" method="post" >
                     <div class="row">
                         <div class="col-md-3"></div>

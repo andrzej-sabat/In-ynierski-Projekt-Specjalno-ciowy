@@ -15,28 +15,19 @@ public class MovieService {
     MovieRepository movieRepository;
 
     @Transactional
-    public Collection<Movie> getAll() {
+    public Collection<Movie> findAllMovies() {
         return movieRepository.getAllMovies();
     }
 
-    @Transactional
-    public void addMovie(Movie Movie) {
-        movieRepository.save(Movie);
+    public Movie findById(Long id) { return movieRepository.findById(id);}
+    public Movie findByMovieId(Long movieId) {
+        return movieRepository.findByMovieId(movieId);}
+
+    public void deleteMovie(Movie movie){
+         movieRepository.delete(movie);
     }
 
-    @Transactional
-    public Movie getMovie(Long id) {
-        return movieRepository.findById(id);
-    }
-    public Movie getMovieByTitle(String title) { return movieRepository.findMovieByTitle(title);}
-    @Transactional
-    public Movie updateMovie(Long movieId,Movie Movie) {
-        return movieRepository.save(Movie);
-    }
 
     @Transactional
-    public void deleteMovie(Movie movie) {
-        movieRepository.delete(movie);
-    }
-    public void deleteByTitle(String title) { movieRepository.deleteByTitle(title);}
+    public void loadData() { movieRepository.loadMoviesCsv(); movieRepository.loadRatingCsv();}
 }

@@ -28,7 +28,6 @@ public class CKResource {
     private long time;
 
 
-
 //Ładowanie danych do ck, wyswietlanie wyniku czasowego ladowania danych
     @RequestMapping(value = "/clickhouse_loadData",method = RequestMethod.GET)
     public ModelAndView loadData() throws SQLException {
@@ -338,7 +337,7 @@ public class CKResource {
                 "jdbc:clickhouse://clickhouse-ips:8123");
         ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
         ClickHouseStatement stm1 = connection.createStatement();
-        String sql = "SELECT movieId, sum(rating) FROM test.ratings FROUP BY movieId ORDER BY sum(rating)";
+        String sql = "SELECT movieId, sum(rating) FROM test.ratings GROUP BY movieId ORDER BY sum(rating)";
         long startTime = System.nanoTime();
         connection.createStatement().execute(sql);
         long endTime = System.nanoTime();

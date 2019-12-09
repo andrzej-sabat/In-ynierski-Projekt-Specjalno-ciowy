@@ -1,57 +1,65 @@
 package ips_project.ips.model;
 
+import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.neo4j.ogm.annotation.StartNode;
-import org.springframework.data.annotation.Id;
 
-@RelationshipEntity(type = "PENDING")
+@NodeEntity
 public class Rating {
 
-    @Id
-    private long userId;
-    @StartNode
-    private long movieId;
+    @GraphId
+    private Long id;
     @Property
-    private int rate;
+    private Integer userId;
     @Property
-    private int timestamp;
+    private Integer movieId;
+    @Property
+    private Integer rate;
+    @Property
+    private Integer timestamp;
 
 
 
     public Rating() {
     }
 
-    public long getUserId() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public long getMovieId() {
+    public Integer getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(long movieId) {
+    public void setMovieId(Integer movieId) {
         this.movieId = movieId;
     }
 
-    public int getRate() {
+    public Integer getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(Integer rate) {
         this.rate = rate;
     }
 
-    public int getTimestamp() {
+    public Integer getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(Integer timestamp) {
         this.timestamp = timestamp;
     }
 }

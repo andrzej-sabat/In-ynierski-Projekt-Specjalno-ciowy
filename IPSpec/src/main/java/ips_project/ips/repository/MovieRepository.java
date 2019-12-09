@@ -8,15 +8,39 @@ import java.util.Collection;
 
 public interface MovieRepository extends Neo4jRepository<Movie, Integer> {
 
-    @Query("MATCH (n:Movie) RETURN n limit 100")
+
+    @Query("LOAD CSV WITH HEADERS FROM 'file:///ratings.csv' AS line\n" +
+            "CREATE (:Rating { userId: toInteger(line.UserId), movieId: toInteger(line.MovieId), rate: toInteger(line.Rate), timestamp: toInteger( line.Timestamp)})")
+    void loadMoviesCsv();
+
+    @Query("LOAD CSV WITH HEADERS FROM 'file:///movies.csv' AS line\n" +
+            "CREATE (:Movie {movieId: toInteger(line.MovieId), title: line.Title, genres: line.Genres})")
+    void loadRatingCsv();
+
+    @Query("MATCH (n:Movie)\n" +
+            "WHERE ID(n) = {0}\n" +
+            "RETURN n")
+    Movie findById(Long id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Query("MATCH (n:Movie) RETURN n")
     Collection<Movie> getAllMovies();
 
-    Movie findById(Long id);
-    Movie findMovieByTitle(String title);
+    Movie findByMovieId(Long movieId);
 
-    Movie deleteById(Long movieId);
-
-    Movie deleteByTitle(String title);
 
 
 }

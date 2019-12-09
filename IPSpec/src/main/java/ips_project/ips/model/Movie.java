@@ -3,10 +3,6 @@ package ips_project.ips.model;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @NodeEntity
 public class Movie {
@@ -14,27 +10,24 @@ public class Movie {
     @GraphId
     private Long id;
     @Property
-    private String movieId;
+    private Long movieId;
     @Property
     private String title;
     @Property
     private String genres;
 
-    @Relationship(type = "PENDING")
-    private List<Rating> rating = new ArrayList<>();
-
-
     public Movie() {
 
     }
 
-    public String getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
+
 
     public Long getId() {
         return id;
@@ -60,13 +53,6 @@ public class Movie {
         this.genres = genres;
     }
 
-    public List<Rating> getRating() {
-        return rating;
-    }
-
-    public void setRating(List<Rating> rating) {
-        this.rating = rating;
-    }
 }
 
 

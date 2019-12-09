@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="css/styles.css" rel="stylesheet"/>
-    <title>Dodawanie filmu</title>
+    <title>Dodawanie oceny</title>
 </head>
 <body>
 
@@ -27,36 +27,26 @@
 
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <h1 style="text-align: center">Dodaj film</h1>
+                    <h1 style="text-align: center">Dodaj oceny</h1>
                     <hr/>
                     <br/>
-                    <form th:action="@{/neo4j_saveMovie}" th:object="${movie}" method="post" >
+                    <form th:action="@{/neo4j_saveRating}" th:object="${rating}" method="post" >
 
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
-                                <input type="hidden" name="id" th:field="*{id}"/>
-                                <input type="hidden" name="movieId" th:field="*{movieId}"/>
-                                <label>Tytuł filmu</label>
-                                <input type="text" id="title" name="title" placeholder="Tytuł filmu"
-                                       class="form-control" th:field="*{title}"/> <br/>
-
+                                <input type="hidden" th:field="*{id}"/>
+                                <label>User Id</label>
+                                <input type="text" id="userId" class="form-control" name="userId" th:field="*{userId}"/><br/>
+                                <label>Movie Id</label>
+                                <input type="text" id="movieId" class="form-control" name="movieId" th:field="*{movieId}"/> <br/>
+                                <label>Ocena</label>
+                                <input type="text" id="rate" class="form-control" name="rate" th:field="*{rate}"/> <br/>
+                                <label>Timestamp</label>
+                                <input type="text" id="timestamp" class="form-control" name="timestamp" th:field="*{timestamp}"/> <br/>
                             </div>
                             <div class="col-md-3"></div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <label>Gatunki filmu</label>
-                                <input type="text" id="nazwa_indeksu" name="genres" placeholder="Gatunki"
-                                       class="form-control" th:field="*{genres}"/> <br/>
-
-                            </div>
-                            <div class="col-md-3"></div>
-                        </div>
-
-
 
                         <div class="row">
                             <div class="col-md-3"></div>
@@ -65,8 +55,8 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <button class="btn btn-lg btn-primary btn-block" name="dodaj_indeks" value="Dodaj" type="Submit">
-                                            Zapisz film
+                                        <button class="btn btn-lg btn-primary btn-block" name="addRate" value="Dodaj" type="Submit">
+                                            Dodaj ocene
                                         </button>
                                     </div>
 
