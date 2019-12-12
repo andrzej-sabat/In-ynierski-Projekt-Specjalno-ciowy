@@ -1,7 +1,20 @@
 package ips_project.ips.resource;
 
+import ips_project.ips.csv.CSVUtils;
 import ips_project.ips.model.ckMovie;
 import ips_project.ips.model.ckRating;
+import ips_project.ips.repository.MovieRepository;
+import ips_project.ips.repository.RatingRepository;
+import ips_project.ips.service.MovieService;
+import ips_project.ips.service.RatingService;
+import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.v1.StatementResult;
+import org.neo4j.driver.v1.Transaction;
+import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.session.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,23 +25,27 @@ import ru.yandex.clickhouse.domain.ClickHouseFormat;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
 public class CKResource {
+    @Autowired
+    RatingService ratingService;
+
+    @Autowired
+    MovieService moviesService;
 
     private long time;
 
-
-//Ładowanie danych do ck, wyswietlanie wyniku czasowego ladowania danych
+    //Ładowanie danych do ck, wyswietlanie wyniku czasowego ladowania danych
     @RequestMapping(value = "/clickhouse_loadData",method = RequestMethod.GET)
     public ModelAndView loadData() throws SQLException {
         ModelAndView modelAndView = new ModelAndView();
@@ -73,11 +90,12 @@ public class CKResource {
 
         time = (endTime - startTime)/1000000;
         connection.close();
+        modelAndView.addObject("wczytano","Pomyślnie wczytano dane w czasie: " + time + "ms");
         modelAndView.addObject("loadTime", time);
-        modelAndView.setViewName("/ck_loadDataResult");
+        modelAndView.setViewName("/ck_main");
         return modelAndView;
     }
-//Buttony od oceny
+    //Buttony od oceny
     @RequestMapping(value = "/ck_addRating",method = RequestMethod.GET)
     public ModelAndView addRating() {
         ModelAndView modelAndView = new ModelAndView();
@@ -172,7 +190,7 @@ public class CKResource {
 
 
 
-//Buttony od filmu
+    //Buttony od filmu
     @RequestMapping(value = "/ck_addMovie",method = RequestMethod.GET)
     public ModelAndView addMovie(){
         ModelAndView modelAndView = new ModelAndView();
@@ -217,7 +235,7 @@ public class CKResource {
         modelAndView.setViewName("/ck_queries");
         return modelAndView;
     }
-//Zapisywanie filmu
+    //Zapisywanie filmu
     @GetMapping("/ck_saveMovie")
     public String showPage(Model model){
         model.addAttribute("ck_movie", new ckMovie());
@@ -349,5 +367,130 @@ public class CKResource {
         modelAndView.setViewName("/ck_queryResult");
         return modelAndView;
     }
+
+
+
+    @RequestMapping(value = "/neo4j_loadRatingFromCK",method = RequestMethod.GET)
+    public ModelAndView neo4j_loadRatingFromCK(Model model) throws IOException {
+        ModelAndView modelAndView = new ModelAndView();
+        String ratingsCsv = "neo4jdata/ck_ratings.csv";
+        FileWriter writerRatingsCsv = new FileWriter(ratingsCsv);
+        long startTime = System.nanoTime();
+        try {
+            ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                    "jdbc:clickhouse://clickhouse-ips:8123");
+            ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = String.format("SELECT userId, movieId, rating, timestamp FROM test.ratings");
+            ResultSet rs = stmt.executeQuery(sql);
+            List<ckRating> ratings = new ArrayList<>();
+            List<String> header = new ArrayList<>();
+            header.add("UserId,MovieId,Rate,Timestamp");
+            CSVUtils.writeLine(writerRatingsCsv,header);
+            while (rs.next()) {
+
+                int userId = rs.getInt("userId");
+                int movieId = rs.getInt("movieId");
+                float rating = rs.getFloat("rating");
+                String timestamp = rs.getString("timestamp");
+
+                ratings.add(new ckRating(userId, movieId, rating, timestamp));
+            }
+
+            for (ckRating ckRating : ratings) {
+
+                List<String> list = new ArrayList<>();
+                list.add(String.valueOf(ckRating.getMovieId()));
+                list.add(String.valueOf(ckRating.getTimestamp()));
+                list.add(String.valueOf(ckRating.getUserId()));
+                list.add(String.valueOf(ckRating.getRating()));
+
+                CSVUtils.writeLine(writerRatingsCsv, list);
+            }
+            writerRatingsCsv.flush();
+            writerRatingsCsv.close();
+            connection.close();
+            long endTime = System.nanoTime();
+
+            time = (endTime - startTime)/1000000;
+            ratingService.loadRatingCsvFromClickHouse();
+            modelAndView.addObject("time",time);
+            modelAndView.addObject("succes","Skopiowano tabelę z ClickHouse w czasie: ");
+            modelAndView.setViewName("neo4j_main");
+            return modelAndView;
+
+        } catch (Exception e) {
+            modelAndView.addObject("error","Tabela nie istnieje");
+            modelAndView.setViewName("neo4j_main");
+            return modelAndView;
+        }
+
+    }
+
+    @RequestMapping(value = "/neo4j_loadMoviesFromCK",method = RequestMethod.GET)
+    public ModelAndView neo4j_loadMoviesFromCK(Model model) throws IOException {
+        ModelAndView modelAndView = new ModelAndView();
+        String moviesCsv = "neo4jdata/ck_movies.csv";
+        FileWriter writerMoviesCsv = new FileWriter(moviesCsv);
+        long startTime = System.nanoTime();
+        try {
+            ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                    "jdbc:clickhouse://clickhouse-ips:8123");
+            ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = String.format("SELECT movieId, title, genre FROM test.movies");
+            ResultSet rs = stmt.executeQuery(sql);
+            List<ckMovie> movies = new ArrayList<>();
+            List<String> header = new ArrayList<>();
+            header.add("MovieId,Title,Genres");
+            CSVUtils.writeLine(writerMoviesCsv,header);
+            while (rs.next()) {
+
+                int movieId = rs.getInt("movieId");
+                String title = rs.getString("title");
+                String genre = rs.getString("genre");
+
+                movies.add(new ckMovie(movieId, title, genre));
+            }
+
+            for (ckMovie ckMovie : movies) {
+
+                List<String> list = new ArrayList<>();
+                list.add(String.valueOf(ckMovie.getMovieId()));
+                list.add(String.valueOf(ckMovie.getTitle()));
+                list.add(String.valueOf(ckMovie.getGenre()));
+
+                CSVUtils.writeLine(writerMoviesCsv, list);
+            }
+            writerMoviesCsv.flush();
+            writerMoviesCsv.close();
+            connection.close();
+
+
+            long endTime = System.nanoTime();
+
+            time = (endTime - startTime)/1000000;
+
+            moviesService.loadMoviesCsvFromClickHouse();
+            modelAndView.addObject("time",time);
+            modelAndView.addObject("succes","Skopiowano tabelę z ClickHouse w czasie: ");
+            modelAndView.setViewName("neo4j_main");
+            return modelAndView;
+
+        } catch (Exception e) {
+            modelAndView.addObject("error","Tabela nie istnieje");
+            modelAndView.setViewName("neo4j_main");
+            return modelAndView;
+        }
+
+    }
+
+
+
+
+
+
 
 }

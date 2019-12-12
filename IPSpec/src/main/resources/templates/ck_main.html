@@ -15,6 +15,10 @@
 <body>
 <h1 style="text-align: center">ClickHouse</h1>
 <hr/>
+<div th:if="${error}" th:text="${error}" class="alert alert-danger" style="text-align: center;"/>
+<div th:if="${succes}" th:text="${succes} + ${time}" class="alert alert-info" style="text-align: center;"/>
+<div th:if="${wczytano}" th:text="${wczytano}" class="alert alert-info" style="text-align: center;"/>
+
 <br/>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -23,6 +27,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <div class="container" style="text-align: center;margin-top: 100px;">
+
+
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
@@ -51,6 +57,21 @@
                 <div class="col-md-4">
                     <a href="/ck_queries" class="btn btn-info w-75 p-3" role="button">Zapytania</a>
                 </div>
+
+            </div>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/ck_loadRatingsFromNeo4j" class="btn btn-info w-75 p-3" role="button">Wczytaj tabelę Rating z bazy Neo4j</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/ck_loadMoviesFromNeo4j" class="btn btn-info w-75 p-3" role="button">Wczytaj tabelę Movies z bazy Neo4j</a>
+                </div>
+                <!--
+                                <div class="col-md-4">
+                                    <a href="/neo4j_queries" class="btn btn-info w-75 p-3" role="button">Zapytania</a>
+                                </div>-->
 
             </div>
         </div>

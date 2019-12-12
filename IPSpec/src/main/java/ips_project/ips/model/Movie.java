@@ -10,7 +10,7 @@ public class Movie {
     @GraphId
     private Long id;
     @Property
-    private Long movieId;
+    private Integer movieId;
     @Property
     private String title;
     @Property
@@ -20,11 +20,11 @@ public class Movie {
 
     }
 
-    public Long getMovieId() {
+    public Integer getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Long movieId) {
+    public void setMovieId(Integer movieId) {
         this.movieId = movieId;
     }
 

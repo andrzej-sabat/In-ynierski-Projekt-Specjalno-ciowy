@@ -1,7 +1,10 @@
 package ips_project.ips.service;
-import ips_project.ips.model.Movie;
 import ips_project.ips.model.Rating;
 import ips_project.ips.repository.RatingRepository;
+import org.neo4j.driver.internal.DriverFactory;
+import org.neo4j.driver.internal.spi.Connection;
+import org.neo4j.driver.v1.*;
+import org.neo4j.ogm.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +14,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class RatingService {
 
     @Autowired
@@ -35,4 +39,16 @@ public class RatingService {
     public  List<Rating> findByRateAndCount(Integer rate) { return  ratingRepository.findByRateAndCount(rate);}
 
     public List<Rating> sumRates() { return ratingRepository.sumRates();}
+
+    @Transactional
+    public void loadRatingCsvFromClickHouse() { ratingRepository.loadRatingCsvFromClickHouse();}
+
+
+
 }
+
+
+
+
+
+

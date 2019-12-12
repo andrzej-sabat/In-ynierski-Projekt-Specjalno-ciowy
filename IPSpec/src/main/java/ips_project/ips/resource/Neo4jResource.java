@@ -1,5 +1,7 @@
 package ips_project.ips.resource;
 
+import com.opencsv.CSVWriter;
+import ips_project.ips.csv.CSVUtils;
 import ips_project.ips.model.Movie;
 import ips_project.ips.model.Rating;
 import ips_project.ips.repository.MovieRepository;
@@ -7,13 +9,19 @@ import ips_project.ips.repository.RatingRepository;
 import ips_project.ips.service.MovieService;
 import ips_project.ips.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.yandex.clickhouse.ClickHouseConnectionImpl;
+import ru.yandex.clickhouse.ClickHouseDataSource;
+import ru.yandex.clickhouse.ClickHouseStatement;
+import ru.yandex.clickhouse.domain.ClickHouseFormat;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,6 +44,7 @@ public class Neo4jResource {
         movieService.loadData();
         long endTime = System.nanoTime();
         time = (endTime - startTime)/1000000;
+        model.addObject("wczytano","Pomyślnie wczytano dane w czasie: " + time + "ms");
         model.addObject("loadTime", time);
         model.setViewName("neo4j_loadDataResult");
         return model;
@@ -204,6 +213,134 @@ public class Neo4jResource {
         modelAndView.setViewName("neo4j_queryResult");
         return modelAndView;
     }
+
+
+
+
+
+    @RequestMapping(value= "/ck_loadMoviesFromNeo4j",method = RequestMethod.GET)
+    public ModelAndView ck_loadMoviesFromNeo4j() throws SQLException,IOException {
+        ModelAndView model = new ModelAndView();
+        try {
+            long startTime = System.nanoTime();
+
+            String moviesCsv = "data/neo4j_movies.csv";
+            FileWriter writerMoviesCsv = new FileWriter(moviesCsv);
+
+            List<Movie> movies = (List<Movie>) movieService.findAllMovies();
+
+            for (Movie movie : movies) {
+
+                List<String> list = new ArrayList<>();
+                list.add(String.valueOf(movie.getMovieId()));
+                list.add(movie.getTitle());
+                list.add(movie.getGenres());
+
+                CSVUtils.writeLine(writerMoviesCsv, list);
+            }
+
+            writerMoviesCsv.flush();
+            writerMoviesCsv.close();
+
+            ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                    "jdbc:clickhouse://clickhouse-ips:8123");
+            ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+            ClickHouseStatement stm1 = connection.createStatement();
+
+            connection.createStatement().execute("CREATE DATABASE IF NOT EXISTS test");
+            connection.createStatement().execute("DROP TABLE IF EXISTS test.movies");
+            connection.createStatement().execute(
+                    "CREATE TABLE IF NOT EXISTS test.movies " +
+                            "(movieId Int32, title String, genre String)" +
+                            "ENGINE = Join(ANY, LEFT, movieId)"
+            );
+
+
+            stm1
+                    .write()
+                    .table("test.movies")
+                    .option("format_csv_delimiter", ",")
+                    .data(new File("/IPSpec/data/neo4j_movies.csv"), ClickHouseFormat.CSV)
+                    .send();
+            long endTime = System.nanoTime();
+            time = (endTime - startTime) / 1000000;
+            connection.close();
+            model.addObject("time",time);
+            model.addObject("succes", "Skopiowano tabelę z Neo4j w czasie: ");
+            model.setViewName("ck_main");
+            return model;
+        } catch (Exception e) {
+            model.addObject("error", "Niepowodzenie");
+            model.setViewName("ck_main");
+            return model;
+
+        }
+    }
+
+
+    @RequestMapping(value= "/ck_loadRatingsFromNeo4j",method = RequestMethod.GET)
+    public ModelAndView ck_loadRatingsFromNeo4j() throws SQLException,IOException {
+        ModelAndView model = new ModelAndView();
+        try {
+            long startTime = System.nanoTime();
+
+            String ratingCsv = "data/neo4j_ratings.csv";
+            FileWriter writerRatingCsv = new FileWriter(ratingCsv);
+
+            List<Rating> ratings = (List<Rating>) ratingService.findAllRatings();
+
+            for (Rating rate : ratings) {
+                List<String> list = new ArrayList<>();
+                list.add(String.valueOf(rate.getUserId()));
+                list.add(String.valueOf(rate.getMovieId()));
+                list.add(String.valueOf(rate.getRate()));
+                list.add(String.valueOf(rate.getTimestamp()));
+
+                CSVUtils.writeLine(writerRatingCsv, list);
+            }
+
+            writerRatingCsv.flush();
+            writerRatingCsv.close();
+
+            ClickHouseDataSource dataSource = new ClickHouseDataSource(
+                    "jdbc:clickhouse://clickhouse-ips:8123");
+            ClickHouseConnectionImpl connection = (ClickHouseConnectionImpl) dataSource.getConnection();
+            ClickHouseStatement stm1 = connection.createStatement();
+
+            connection.createStatement().execute("CREATE DATABASE IF NOT EXISTS test");
+            connection.createStatement().execute("DROP TABLE IF EXISTS test.ratings");
+            connection.createStatement().execute(
+                    "CREATE TABLE IF NOT EXISTS test.ratings" +
+                            "(userId Int32," +
+                            " movieId Int32, " +
+                            "rating Float32, " +
+                            "timestamp String) " +
+                            "ENGINE = Join(ANY, LEFT, userId)");
+
+
+            stm1
+                    .write()
+                    .table("test.ratings")
+                    .option("format_csv_delimiter", ",")
+                    .data(new File("/IPSpec/data/neo4j_ratings.csv"), ClickHouseFormat.CSV)
+                    .send();
+
+            long endTime = System.nanoTime();
+            time = (endTime - startTime) / 1000000;
+            connection.close();
+            model.addObject("time",time);
+            model.addObject("succes","Skopiowano tabelę z Neo4j w czasie: ");
+            model.setViewName("ck_main");
+            return model;
+        }
+        catch (Exception e){
+            model.addObject("error","Niepowodzenie");
+            model.setViewName("ck_main");
+            return model;
+
+        }
+    }
+
 
 
 

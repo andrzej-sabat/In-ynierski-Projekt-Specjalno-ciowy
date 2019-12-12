@@ -14,9 +14,9 @@ public class Rating {
     @Property
     private Integer movieId;
     @Property
-    private Integer rate;
+    private Float rate;
     @Property
-    private Integer timestamp;
+    private String timestamp;
 
 
 
@@ -47,19 +47,19 @@ public class Rating {
         this.movieId = movieId;
     }
 
-    public Integer getRate() {
+    public Float getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Float rate) {
         this.rate = rate;
     }
 
-    public Integer getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }
