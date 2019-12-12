@@ -44,6 +44,11 @@ public class RatingService {
     public void loadRatingCsvFromClickHouse() { ratingRepository.loadRatingCsvFromClickHouse();}
 
 
+    public void deleteAll() { ratingRepository.deleteAll();}
+
+    public void numberOfNodes() { ratingRepository.numberOfNodes();}
+
+
 
 }
 

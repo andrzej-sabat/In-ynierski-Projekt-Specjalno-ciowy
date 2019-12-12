@@ -20,7 +20,7 @@ public interface RatingRepository extends Neo4jRepository<Rating, Long> {
             "', {batchSize:10000, iterateList:true, parallel:true});")
     void loadRatingCsvFromClickHouse();
 
-    @Query("MATCH (n:Rating) RETURN n limit 1000")
+    @Query("MATCH (n:Rating) RETURN n")
     Collection<Rating> getAllRatings();
 
     @Query("MATCH (n:Rating) WHERE ID(n) = {0} RETURN n")
@@ -37,6 +37,12 @@ public interface RatingRepository extends Neo4jRepository<Rating, Long> {
     // QUERY 3
     @Query("MATCH (n:Rating) RETURN n.movieId,SUM(n.rate) ORDER BY SUM(n.rate)")
     List<Rating> sumRates();
+
+    @Query("MATCH (n) WITH n LIMIT 50000 DETACH DELETE n RETURN count(*)")
+    void deleteAll();
+
+    @Query("MATCH (n) RETURN count(n) as number;")
+    Integer numberOfNodes();
 
 
 

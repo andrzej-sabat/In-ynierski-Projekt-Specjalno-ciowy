@@ -46,7 +46,7 @@ public class Neo4jResource {
         time = (endTime - startTime)/1000000;
         model.addObject("wczytano","Pomyślnie wczytano dane w czasie: " + time + "ms");
         model.addObject("loadTime", time);
-        model.setViewName("neo4j_loadDataResult");
+        model.setViewName("neo4j_main");
         return model;
 
     }
@@ -339,6 +339,23 @@ public class Neo4jResource {
             return model;
 
         }
+    }
+
+
+    @RequestMapping(value = "/deleteAllFromNeo4j", method = RequestMethod.GET)
+    public ModelAndView deleteAllFromNeo4j(ModelAndView model){
+        long startTime = System.nanoTime();
+        do {
+
+            ratingRepository.deleteAll();
+
+        }while(ratingRepository.numberOfNodes() != 0);
+        long endTime = System.nanoTime();
+        time = (endTime - startTime) / 1000000;
+        model.addObject("usunieto","Pomyślnie usunięto wszystkie rekordy w czasie: " + time + "ms");
+        model.setViewName("neo4j_main");
+        return model;
+
     }
 
 
