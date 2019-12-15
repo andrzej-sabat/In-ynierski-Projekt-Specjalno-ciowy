@@ -66,3 +66,12 @@ Aplikacją jest objęta licencją MIT.
 
 ![Błąd](diagram_sekwencji.png "Opcjonalny tytul")
 
+
+#### 10. Screeny z aplikacji:
+*Wczytywanie danych
+
+-Neo4J
+![Błąd](Neo4J.PNG "Opcjonalny tytul")
+
+-ClickHouse
+![Błąd](ClickHouse.PNG "Opcjonalny tytul")
