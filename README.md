@@ -70,10 +70,10 @@ Aplikacją jest objęta licencją MIT.
 #### 10. Screeny z aplikacji:
 *Wczytywanie danych*
 
--Neo4J
+- Neo4J
 
 ![Błąd](Neo4J.PNG "Opcjonalny tytul")
 
--ClickHouse
+- ClickHouse
 
 ![Błąd](ClickHouse.PNG "Opcjonalny tytul")
