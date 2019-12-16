@@ -28,16 +28,27 @@ public interface RatingRepository extends Neo4jRepository<Rating, Long> {
 
     // QUERY 1
     @Query("MATCH (n:Rating) WHERE n.rate > {0} RETURN n")
-    List<Rating> findByRate(Integer rate);
+    List<Rating> findByRate(Float rate);
 
     // QUERY 2
     @Query("MATCH (n:Rating) WHERE n.rate >= {0} RETURN n.movieId,COUNT(n) ORDER BY COUNT(n)")
-    List<Rating> findByRateAndCount(Integer rate);
+    List<Rating> findByRateAndCount(Float rate);
 
     // QUERY 3
     @Query("MATCH (n:Rating) RETURN n.movieId,SUM(n.rate) ORDER BY SUM(n.rate)")
     List<Rating> sumRates();
 
+    @Query("MATCH (n) WITH n LIMIT 50000 DETACH DELETE n RETURN count(*)")
+    void deleteAll();
+
+    @Query("MATCH (n) RETURN count(n) as number;")
+    Integer numberOfNodes();
+
+
+    @Query("MATCH (n:Rating)\n" +
+            "WHERE ID(n) >= {0} AND ID(n) <= {1} \n" +
+            "RETURN n.movieId as movieId,n.rate as rate,n.userId as userId,n.timestamp as timestamp;")
+    StatementResult getRatings(Integer start, Integer end);
 
 
 

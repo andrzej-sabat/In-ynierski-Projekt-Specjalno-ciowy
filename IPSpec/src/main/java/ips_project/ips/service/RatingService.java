@@ -1,6 +1,7 @@
 package ips_project.ips.service;
 import ips_project.ips.model.Rating;
 import ips_project.ips.repository.RatingRepository;
+import jnr.ffi.annotations.In;
 import org.neo4j.driver.internal.DriverFactory;
 import org.neo4j.driver.internal.spi.Connection;
 import org.neo4j.driver.v1.*;
@@ -34,14 +35,23 @@ public class RatingService {
 
     public void delete(Rating rating) {ratingRepository.delete(rating);}
 
-    public List<Rating> findByRate(Integer rate) { return ratingRepository.findByRate(rate);}
+    public List<Rating> findByRate(Float rate) { return ratingRepository.findByRate(rate);}
 
-    public  List<Rating> findByRateAndCount(Integer rate) { return  ratingRepository.findByRateAndCount(rate);}
+    public  List<Rating> findByRateAndCount(Float rate) { return  ratingRepository.findByRateAndCount(rate);}
 
     public List<Rating> sumRates() { return ratingRepository.sumRates();}
 
     @Transactional
     public void loadRatingCsvFromClickHouse() { ratingRepository.loadRatingCsvFromClickHouse();}
+
+
+    public void deleteAll() { ratingRepository.deleteAll();}
+
+    public void numberOfNodes() { ratingRepository.numberOfNodes();}
+
+
+    public StatementResult getRatings(Integer start,Integer end) { return ratingRepository.getRatings(start,end);}
+
 
 
 

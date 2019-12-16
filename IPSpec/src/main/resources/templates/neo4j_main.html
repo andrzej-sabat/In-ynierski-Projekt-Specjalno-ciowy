@@ -18,6 +18,7 @@
 <div th:if="${error}" th:text="${error}" class="alert alert-danger" style="text-align: center;"/>
 <div th:if="${succes}" th:text="${succes} + ${time}" class="alert alert-info" style="text-align: center;"/>
 <div th:if="${wczytano}" th:text="${wczytano}" class="alert alert-info" style="text-align: center;"/>
+<div th:if="${usunieto}" th:text="${usunieto}" class="alert alert-info" style="text-align: center;"/>
 <br/>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -67,9 +68,23 @@
                 <div class="col-md-4">
                     <a href="/neo4j_loadMoviesFromCK" class="btn btn-info w-75 p-3" role="button">Wczytaj tabelę Movies z bazy ClickHouse</a>
                 </div>
-<!--
                 <div class="col-md-4">
-                    <a href="/neo4j_queries" class="btn btn-info w-75 p-3" role="button">Zapytania</a>
+                    <a href="/deleteAllFromNeo4j" class="btn btn-info w-75 p-3" role="button">Usuń wszystkie</a>
+                </div>
+
+            </div>
+            <br/>
+            <br/>
+
+           <!-- <div class="row">
+                <div class="col-md-4">
+                    <a href="/test" class="btn btn-info w-75 p-3" role="button">Test</a>
+                </div>-->
+              <!--  <div class="col-md-4">
+                    <a href="/neo4j_loadMoviesFromCK" class="btn btn-info w-75 p-3" role="button">Wczytaj tabelę Movies z bazy ClickHouse</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/deleteAllFromNeo4j" class="btn btn-info w-75 p-3" role="button">Usuń wszystkie</a>
                 </div>-->
 
             </div>

@@ -18,7 +18,7 @@ public interface MovieRepository extends Neo4jRepository<Movie, Integer> {
     void loadMoviesCsvFromClickHouse();
 
     @Query("CALL apoc.periodic.iterate('\n" +
-            "CALL apoc.load.csv(\"file:///ratings.csv\") yield map as line\n" +
+            "CALL apoc.load.csv(\"file:///ratingss.csv\") yield map as line\n" +
             "','\n" +
             "CREATE (p:Rating {userId: toInteger(line.UserId), movieId: toInteger(line.MovieId), timestamp:  line.Timestamp, rate: toFloat(line.Rate)}) SET p.id = line.id\n" +
             "RETURN p\n" +

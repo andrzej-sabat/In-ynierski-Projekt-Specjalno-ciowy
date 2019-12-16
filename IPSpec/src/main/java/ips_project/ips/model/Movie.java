@@ -20,6 +20,12 @@ public class Movie {
 
     }
 
+    public Movie(Integer movieId, String title, String genres) {
+        this.movieId = movieId;
+        this.title = title;
+        this.genres = genres;
+    }
+
     public Integer getMovieId() {
         return movieId;
     }

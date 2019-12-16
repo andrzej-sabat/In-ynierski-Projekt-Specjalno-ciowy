@@ -23,6 +23,13 @@ public class Rating {
     public Rating() {
     }
 
+    public Rating(Integer userId, Integer movieId, Float rate, String timestamp) {
+        this.userId = userId;
+        this.movieId = movieId;
+        this.rate = rate;
+        this.timestamp = timestamp;
+    }
+
     public Long getId() {
         return id;
     }

@@ -35,7 +35,6 @@
                     <th>MovieId</th>
                     <th>Title</th>
                     <th>Genres</th>
-                    <th>Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,14 +42,7 @@
                     <td th:text="${movie.movieId}"></td>
                     <td th:text="${movie.title}"></td>
                     <td th:text="${movie.genre}"></td>
-                    <td>
 
-                        <a th:href="@{/ck_editMovie/?movieId={movieId}(movieId=${movie.movieId})}"
-                           class="btn btn-info">Edytuj</a>
-                        <a th:href="@{/ck_deleteMovie/?movieId={movieId}(movieId=${movie.movieId})}"
-                           class="btn btn-danger">Usuń</a>
-
-                    </td>
                 </tr>
                 </tbody>
             </table>

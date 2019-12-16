@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<div th:if="${succes}" th:text="${succes}" class="alert alert-info" style="text-align: center;"/>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -26,9 +28,9 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-md-4">
+               <!-- <div class="col-md-4">
                     <a href="/ck_query1" class="btn btn-info w-75 p-3" role="button" th:action="@{/ck_query1}">Zapytanie wybierające</a>
-                </div>
+                </div>-->
                 <div class="col-md-4">
                     <a href="/ck_query2" class="btn btn-info w-75 p-3" role="button" th:action="@{/ck_query2}">Zapytanie grupujace</a>
                 </div>
