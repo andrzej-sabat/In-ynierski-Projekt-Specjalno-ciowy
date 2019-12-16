@@ -77,3 +77,9 @@ Aplikacją jest objęta licencją MIT.
 - ClickHouse
 
 ![Błąd](ClickHouse.PNG "Opcjonalny tytul")
+
+*Usuwanie danych*
+
+- Neo4J
+
+![Błąd](Usun.PNG "Opcjonalny tytul")
