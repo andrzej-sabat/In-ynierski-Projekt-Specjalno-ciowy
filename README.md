@@ -31,7 +31,7 @@
 *W systemie istnieje jedna grupa użytkowników, która ma dostęp do wszystkich funkcjonalności systemu.*
 
 #### 6.Autorzy aplikacji oraz podział obowiązków:
-- Andrzej Sabat - kapitan, pisanie kodu aplikacji
+- Andrzej Sabat (sabacik8@gmail.com) - kapitan, pisanie kodu aplikacji
 - Adam Marzec - pisanie dokumentacji, pomoc przy bazie danych
 - Damian Wawrzkowicz (damian.waw30@gmail.com) - pisanie kodu aplikacji
 - Krzysztof Pięta - zajmowanie sie bazą danych
