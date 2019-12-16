@@ -67,7 +67,7 @@ Aplikacją jest objęta licencją MIT.
 ![Błąd](diagram_sekwencji.png "Opcjonalny tytul")
 
 
-#### 10. Screeny z aplikacji:
+#### 10.Przykładowe screeny z aplikacji dla miliona danych:
 *Wczytywanie danych*
 
 - Neo4J
