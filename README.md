@@ -33,7 +33,7 @@
 #### 6.Autorzy aplikacji oraz podział obowiązków:
 - Andrzej Sabat - kapitan, pisanie kodu aplikacji
 - Adam Marzec - pisanie dokumentacji, pomoc przy bazie danych
-- Damian Wawrzkowicz - pisanie kodu aplikacji
+- Damian Wawrzkowicz (damian.waw30@gmail.com) - pisanie kodu aplikacji
 - Krzysztof Pięta - zajmowanie sie bazą danych
 
 #### 7.Licencja
