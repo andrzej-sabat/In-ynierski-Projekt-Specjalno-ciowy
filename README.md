@@ -34,7 +34,7 @@
 - Andrzej Sabat (sabacik8@gmail.com) - kapitan, pisanie kodu aplikacji
 - Adam Marzec - pisanie dokumentacji, pomoc przy bazie danych
 - Damian Wawrzkowicz (damian.waw30@gmail.com) - pisanie kodu aplikacji
-- Krzysztof Pięta - zajmowanie sie bazą danych
+- Krzysztof Pięta - (krzysztofpieta1997@gmail.com) zajmowanie sie bazą danych
 
 #### 7.Licencja
 
